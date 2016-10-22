@@ -1,2 +1,2 @@
 # aggs-flower
-kibana d3 baed plugin
+kibana d3 based plugin
