@@ -1,4 +1,4 @@
-# Project Title
+# Kibana forced simulation aggregation visualisation plugin
 
 Kibana visualisation plugin using d3 forced simulation
 
