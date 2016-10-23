@@ -14,7 +14,7 @@ define(function (require) {
     return new TemplateVisType({
         name: 'aggs-flower',
         title: 'Aggs Flower',
-        icon: 'fa-car',
+        icon: 'fa-share-alt',
         description: 'empty template',
         template: require('plugins/aggs-flower/aggs-flower.html'),
         params: {
