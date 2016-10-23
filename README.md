@@ -12,7 +12,7 @@
 	<image src="https://github.com/commsart/aggs-flower/raw/master/pics/plug1.jpg">
 	<image src="https://github.com/commsart/aggs-flower/raw/master/pics/plug2.jpg">
 	<image src="https://github.com/commsart/aggs-flower/raw/master/pics/plug3.jpg">
-	
+
 	<p>The plugin use the d3 latest library (v4) and thus will require installing it to Kibana. 
 	I have performed normal d3 installation in a separate folder and just moved it into d3v4 folder 
 	(kibana-windows\node_modules\d3v4) and it worked fine. Will try to better understand node and require one day...</p>
