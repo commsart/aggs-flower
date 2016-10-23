@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset='utf-8'>
@@ -9,9 +8,9 @@
 
 	<p>Kibana visualisation plugin using d3 forced simulation</p>
 
-	<img src="pics\plug1.jpg">
-	<img src="pics\plug2.jpg">
-	<img src="pics\plug3.jpg">
+	![Alt text](/pics/plug1.jpg?raw=true "shot 1")
+	![Alt text](/pics/plug2.jpg?raw=true "shot 2")
+	![Alt text](/pics/plug3.jpg?raw=true "shot 3")
 
 	<p>The plugin use the d3 latest library (v4) and thus will require installing it to Kibana. 
 	I have performed normal d3 installation in a separate folder and just moved it into d3v4 folder 
