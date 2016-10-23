@@ -1,3 +1,4 @@
+
 <html lang="en">
   <head>
     <meta charset='utf-8'>
@@ -8,6 +9,8 @@
 
 	<p>Kibana visualisation plugin using d3 forced simulation</p>
 
+	[a relative link](/pics/plug1.jpg)
+	![Alt Text](https://github.com/commsart/aggs-flower/raw/master/pics/plug1.jpg)
 	![Alt text](/pics/plug1.jpg?raw=true "shot 1")
 	![Alt text](/pics/plug2.jpg?raw=true "shot 2")
 	![Alt text](/pics/plug3.jpg?raw=true "shot 3")
