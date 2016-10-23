@@ -1,0 +1,13 @@
+in no particular order:
+- allow for aggregations names discovery and multiple buckets. Currently hardcoded for default "2" and "3s"
+- cleanup parameters; good auto scaling
+- design good auto scaling for svg size / given node size. Best would be to calculate the nodes (circles) 
+	distribution density around the edges of the graph and adjust the size accordingly
+- opposite scaling - scale nodes while keeping svg constant
+- collision detection for nodes, make sure that nodes do not overlap
+- what would be required to make it 3D?
+- update the data bind to the simulation rather than redrawing entire svg. Hopefully new nodes/links will pop out with new data...
+
+others:
+- different node and links coloring
+- more information displayed on the links (data, text...)
