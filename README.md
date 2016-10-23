@@ -9,11 +9,9 @@
 
 	<p>Kibana visualisation plugin using d3 forced simulation</p>
 
-	[a relative link](/pics/plug1.jpg)
 	![Alt Text](https://github.com/commsart/aggs-flower/raw/master/pics/plug1.jpg)
-	![Alt text](/pics/plug1.jpg?raw=true "shot 1")
-	![Alt text](/pics/plug2.jpg?raw=true "shot 2")
-	![Alt text](/pics/plug3.jpg?raw=true "shot 3")
+	![Alt Text](https://github.com/commsart/aggs-flower/raw/master/pics/plug2.jpg)
+	![Alt Text](https://github.com/commsart/aggs-flower/raw/master/pics/plug3.jpg)
 
 	<p>The plugin use the d3 latest library (v4) and thus will require installing it to Kibana. 
 	I have performed normal d3 installation in a separate folder and just moved it into d3v4 folder 
