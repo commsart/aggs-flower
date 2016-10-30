@@ -1,6 +1,5 @@
 in no particular order:
 - allow for aggregations names discovery and multiple buckets. Currently hardcoded for default "2" and "3s"
-- cleanup parameters; good auto scaling
 - design good auto scaling for svg size / given node size. Best would be to calculate the nodes (circles) 
 	distribution density around the edges of the graph and adjust the size accordingly
 - opposite scaling - scale nodes while keeping svg constant

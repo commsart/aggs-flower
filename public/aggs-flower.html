@@ -1,3 +1,24 @@
 <div ng-controller="AggsFlowerCtrl" ng-init="init()" class="metric-vis">
-    <div class="metric-container" ng-model="metrics"></div>
+    <div class="metric-container" ng-model="metrics">
+        <svg id="svg1" width="300" height="300">
+            <title>aggs-flower</title>
+            <desc>aggs-flower Kibana plugin</desc>
+            <defs>
+                <filter id="dropshadow" height="125%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                    <feOffset dx="2" dy="3" result="offsetblur"/>
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.3"/>
+                    </feComponentTransfer>
+                    <feMerge> 
+                        <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/> 
+                    </feMerge>
+                </filter>
+                <filter id="blurfilter" x="-2" y="-2" width="100" height="100">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+                </filter>
+            </defs>
+        </svg>
+    </div>
 </div>
