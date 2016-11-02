@@ -71,25 +71,33 @@ define(function (require) {
                 // total number of nodes
                 total = nodes.length || 1;
                 // start drawing
-                div = d3.select(svgRoot);
-                // if exists, remove existing svg
-                if(svg) {
-                    svg.selectAll("text").remove();
-                    div.selectAll('svg').remove();
-                } 
-                // (re)create svg
-                svg = div.append('svg')
-                    .attr('width', w)
-                    .attr('height', h)
-                    .attr('style',"display: block; margin: auto")
-                    .call(d3.zoom().scaleExtent([1 / 2, 8]).on("zoom", zoomed)) // activate zooming, currently does not work (even propagation!)
-                        .attr("transform", "translate(0,0)");
+                if (svg === undefined)  {
+                    svg = d3.select(svgRoot).select("#svg1");
+                    // cleanup up previous elements
+                    svg.selectAll("rect").remove();
+                    svg
+                        .attr('width', w)
+                        .attr('height', h)
+                        .attr('style',"display: block; margin: auto")
+                        .call(d3.zoom().scaleExtent([1 / 2, 8]).on("zoom", zoomed)) // activate zooming, currently does not work (even propagation!)
+                            .attr("transform", "translate(0,0)");
                 // draw a border
-                svg.append("svg:rect")
-                    .style("stroke", "#003")
-                    .style("fill", "#eef")
-                    .attr('width', w)
-                    .attr('height', h);
+                    svg.append("svg:rect")
+                        .style("stroke", "#003")
+                        .style("fill", "#eef")
+                        .style("fill-opacity", "0.0")
+                        .attr('width', w)
+                        .attr('height', h);
+                }   else {
+                    svg.selectAll("text").remove();
+                    svg
+                        .attr('width', w)
+                        .attr('height', h);
+                    svg.select("rect")
+                        .attr('width', w)
+                        .attr('height', h);                    
+                }
+                
                 // display sample data text
                 if (locParams.sample) {
                     svg.append("svg:text")
@@ -109,8 +117,10 @@ define(function (require) {
                 // assign nodes to simulation
                 simulation.nodes(nodes);
                 // assign links to simulation
-                simulation.force("link").links(links);        
-                linkSvg = svg.selectAll(".link").data(links);//, function(d) { return d.id; });
+                simulation.force("link").links(links);
+                // start drawing
+                svg.selectAll(".link").remove();
+                linkSvg = svg.selectAll(".link").data(links);
                 // Exit any old links.
                 linkSvg.exit().remove();
                 // Enter any new links
@@ -118,10 +128,11 @@ define(function (require) {
                   .attr("class", "link")
                   .style("stroke", "#aab");
                 // Update the nodes
+                svg.selectAll(".node").remove();
                 nodeSvg = svg.selectAll(".node").data(nodes);//, function(d) { return d.id; })
+                //nodeSvg.exit().remove();
                 // Enter any new nodes
                 nodeSvg = nodeSvg.enter().append("g")       
-                    .attr("class", "node")
                     .call(d3.drag()
                         .on("start", dragstarted)   // raise the node, restart simulation 
                         .on("drag", dragged)        // 
@@ -132,10 +143,18 @@ define(function (require) {
                     .on("dblclick", dblclick);  // lower node
                 // draw nodes
                 nodeSvg.append("circle")
-                    .classed("collapsed", function(d) { return d.data.collapsed ? 1 : 0; })
+                    .attr("class", "node")
+        //          .classed("collapsed", function(d) { return d.data.collapsed ? true : false; }) // adds collapsed class if param exists, currently class not defined
+                    .classed("filtered-shadow", function(d) { return d.data.size * sizeScale > 10 ? true : false;}) // classing and attr(class) sequence is important. shadow only above 10 size
                     .attr("r", function(d) { return Math.max(locParams.minNodeSize, d.data.size * sizeScale);})
-                    .style("fill", function color(d) { return "hsl(" + (360/newJson.total)*d.data.id +", 100%, 50%)";}) // color is evenly distributed between all nodes by id
-                    .style("stroke", "#333");
+                    .style("fill", function color(d) { return "hsl(" + (360/newJson.total)*d.data.id +", 100%, 50%)";}); // color is evenly distributed between all nodes by id
+                nodeSvg.append("circle")    // the sphere effect is added by a white smaller circle that is first offset here and then blurred in a filter
+                    .attr("class", "nodesphere")
+                    .classed("filtered-blur", true) // will be blured in filter by browser
+                    .attr("r", function(d) { return d.data.size * sizeScale * 0.45;})   // reduce diameter
+                    .attr("cx", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
+                    .attr("cy", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
+                    .style("fill", "#fff"); // white color                
                 // restart simulation
                 simulation.alphaTarget(locParams.alphaTarget/100).restart();
                 // add hidden text to each node

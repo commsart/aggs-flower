@@ -18,9 +18,14 @@
 .filtered-shadow {
    filter: url(#dropshadow);
 }
-
 .filtered-blur {
    filter: url(#blurfilter);
+}
+.filtered-glow {
+   filter: url(#glow);
+}
+.filtered-sphere {
+   filter: url(#sphere);
 }
 
 text {
@@ -36,9 +41,10 @@ circle {
 	fill: #ccc;
 	stroke: #999;
 	pointer-events: all;
-        opacity: 0.8;
+        opacity: 1;
 }
 
+/*
 circle.parent {
 	fill: #1f77b4;
 	fill-opacity: .4;
@@ -47,6 +53,7 @@ circle.parent {
 	stroke-width: 2;
 	stroke-dasharray: 5 3;
 }
+*/
 
 circle:hover {
   opacity: 1;
@@ -63,9 +70,17 @@ circle.child {
 }
 
 circle.node {
-  cursor: pointer;
-  stroke: #000;
-  stroke-width: .5px;
+    cursor: pointer;
+    stroke: #000;
+    stroke-width: 1px;
+    display: block;
+}
+
+circle.nodesphere {
+    cursor: pointer;
+    stroke-width: 0px;
+    display: block;
+    fill: #fff;
 }
 
 circle.node.directory {

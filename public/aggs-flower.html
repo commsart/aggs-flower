@@ -4,19 +4,37 @@
             <title>aggs-flower</title>
             <desc>aggs-flower Kibana plugin</desc>
             <defs>
-                <filter id="dropshadow" height="125%">
+                <filter id="dropshadow" height="135%" width="135%">
                     <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-                    <feOffset dx="2" dy="3" result="offsetblur"/>
+                    <feOffset dx="4" dy="4" result="offdropshadow"/>
                     <feComponentTransfer>
-                        <feFuncA type="linear" slope="0.3"/>
+                        <feFuncA type="linear" slope="0.4"/>
                     </feComponentTransfer>
-                    <feMerge> 
-                        <feMergeNode/>
-                            <feMergeNode in="SourceGraphic"/> 
+                    <feMerge> <!-- merging sequence controls what element ends up on the top -->
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>                        
                     </feMerge>
                 </filter>
-                <filter id="blurfilter" x="-2" y="-2" width="100" height="100">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="2"/>
+                    <feOffset dx="5" dy="5" result="offglow"/>
+                    <feMerge>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <filter id="sphere">
+                    <feGaussianBlur stdDeviation="2"/>
+                    <feOffset dx="-5" dy="-5" result="offsphere"/>
+                    <feMerge>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <radialGradient id="rg1" cx="35%" cy="35%" r="60%">
+                    <stop stop-color="gold" offset="20%"/>
+                    <stop stop-color="green" offset="110%"/>
+                </radialGradient>
+                <filter id="blurfilter" x="-2" y="-2" width="130" height="130">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="7" />                    
                 </filter>
             </defs>
         </svg>
