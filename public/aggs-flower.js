@@ -29,7 +29,8 @@ define(function (require) {
                         charge: true,
                         fstrength: -6,
                         minNodeSize: 3,
-                        alphaTarget: 50
+                        alphaTarget: 50,
+                        hsld: "90%, 45%"
                     }
             }
         },

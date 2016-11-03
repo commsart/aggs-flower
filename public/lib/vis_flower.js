@@ -145,16 +145,22 @@ define(function (require) {
                 nodeSvg.append("circle")
                     .attr("class", "node")
         //          .classed("collapsed", function(d) { return d.data.collapsed ? true : false; }) // adds collapsed class if param exists, currently class not defined
-                    .classed("filtered-shadow", function(d) { return d.data.size * sizeScale > 10 ? true : false;}) // classing and attr(class) sequence is important. shadow only above 10 size
+                    .classed("filtered-shadow", function(d) { return d.data.size * sizeScale > 6 ? true : false;}) // classing and attr(class) sequence is important. shadow only above 6 size
                     .attr("r", function(d) { return Math.max(locParams.minNodeSize, d.data.size * sizeScale);})
-                    .style("fill", function color(d) { return "hsl(" + (360/newJson.total)*d.data.id +", 100%, 50%)";}); // color is evenly distributed between all nodes by id
+                    .style("fill", function color(d) { return "hsl(" + (360/newJson.total)*d.data.id + ", " + locParams.hsld;}); // color is evenly distributed between all nodes by id
                 nodeSvg.append("circle")    // the sphere effect is added by a white smaller circle that is first offset here and then blurred in a filter
                     .attr("class", "nodesphere")
                     .classed("filtered-blur", true) // will be blured in filter by browser
                     .attr("r", function(d) { return d.data.size * sizeScale * 0.45;})   // reduce diameter
                     .attr("cx", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
                     .attr("cy", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
-                    .style("fill", "#fff"); // white color                
+                    .style("fill", "#fff"); // white color     
+                nodeSvg.append("circle")    // the sphere effect circle is added as white smaller circle
+                    .attr("class", "nodesphere")
+                    .attr("r", function(d) { return d.data.size * sizeScale  > 15 ? d.data.size * sizeScale * d.data.size * sizeScale * 0.005 : 0;})   // reduce diameter
+                    .attr("cx", function(d) { return -d.data.size * sizeScale * 0.4;})  // offset centre
+                    .attr("cy", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
+                    .style("fill", "#fff"); // white color
                 // restart simulation
                 simulation.alphaTarget(locParams.alphaTarget/100).restart();
                 // add hidden text to each node
