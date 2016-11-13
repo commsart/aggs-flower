@@ -129,6 +129,7 @@ define(function (require) {
                   .style("stroke", "#aab");
                 // Update the nodes
                 svg.selectAll(".node").remove();
+				svg.selectAll(".nodesphere").remove();
                 nodeSvg = svg.selectAll(".node").data(nodes);//, function(d) { return d.id; })
                 //nodeSvg.exit().remove();
                 // Enter any new nodes
