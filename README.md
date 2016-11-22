@@ -9,9 +9,9 @@ Kibana visualisation plugin using d3 forced simulation
 The plugin use the d3 latest library (v4) and thus will require installing it to Kibana. I have performed normal d3 installation in a separate folder and just moved it into d3v4 folder 
 (kibana-windows\node_modules\d3v4) and it worked fine. Will try to better understand node and require one day...
 
-The plugin will run in Kibana version 5 but in public\aggs-flower.js you need to change:
-line 11: ...template_vis_type/TemplateVisType'));  to   ...template_vis_type/template_vis_type'));
-line 12: ...require('ui/Vis/Schemas'));   to    ...require('ui/vis/schemas'));
+The plugin will run in Kibana version 5 and previous. To make run in versions prior 5.0, in public\aggs-flower.js you need to change:
+line 11: ...template_vis_type/template_vis_type'));  to   ...template_vis_type/TemplateVisType'));
+line 12: ...require('ui/vis/schemas'));   to    ...require('ui/Vis/Schemas'));
 
 Current version is using svg to render the graphics but I already have canvas version available. 
 Canvas version is a bit more mouse challenged and needs few more lines of code.

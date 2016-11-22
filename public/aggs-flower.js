@@ -8,8 +8,8 @@ define(function (require) {
     require('ui/registry/vis_types').register(AggsFlowerProvider);
 
   function AggsFlowerProvider(Private) {
-    var TemplateVisType = Private(require('ui/template_vis_type/TemplateVisType'));
-    var Schemas = Private(require('ui/Vis/Schemas'));
+    var TemplateVisType = Private(require('ui/template_vis_type/template_vis_type'));
+    var Schemas = Private(require('ui/vis/schemas'));
 
     return new TemplateVisType({
         name: 'aggs-flower',

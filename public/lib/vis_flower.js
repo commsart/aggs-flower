@@ -218,8 +218,18 @@ define(function (require) {
 
             dragended = function (d) {
                 if (!d3.event.active) simulation.alphaTarget(locParams.alphaTarget/100);
-                d.fx = null;
-                d.fy = null;
+                //d.fx = null;
+                //d.fy = null;
+                if (d.fixed === undefined) d.fixed = true;  // fix the node
+                else {  // release the node
+                    d.fixed = !d.fixed;
+                    if (!d.fixed)    {
+                        d.fx = null;
+                        d.fy = null;
+                        d.x = d3.event.x;
+                        d.y = d3.event.y;
+                    }
+        }
             };
 
             // lowers the clicked node so we can see other nodes
@@ -240,12 +250,17 @@ define(function (require) {
             
             // displays node text
             mouseover = function (d) {
-                d3.select(this).selectAll("text").style('display', 'block');
+                if (locParams.alltext)  {
+                    svg.selectAll("text").style('display', 'block');
+                }   else {
+                    d3.select(this).selectAll("text").style('display', 'block');
+                }
             };
 
             // hide node text
             mouseout = function (d) {
-                d3.select(this).selectAll("text").style('display', 'none');
+                d3.selectAll("text").style('display', 'none');
+                //d3.select(this).selectAll("text").style('display', 'none');
             };
 
             finished = function (d) {
