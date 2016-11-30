@@ -8,7 +8,7 @@ Functionality:
 - dragging node positions it it static location, you can release the node by another drag
 - plugin options allow for display modifications (note - still working on behaviour, currently need to press play button next to options and query refresh button for changes to fire up)
 
-[![Youtube video](https://youtu.be/st74y0_bdfc/0.jpg)](https://youtu.be/st74y0_bdfc)
+[![Youtube video](http://img.youtube.com/vi/st74y0_bdfc/0.jpg)](https://youtu.be/st74y0_bdfc)
 
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug1.jpg)
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug2.jpg)
