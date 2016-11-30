@@ -25,6 +25,7 @@ define(function (require) {
             newJson.name = "center";
             newJson.size = 3;
             newJson.id = id++;
+            newJson.collapsed = false;
             newJson.sizeScale = 1;
             newJson.total = 1;
             newJson.maxSize = newJson.size;
@@ -32,7 +33,7 @@ define(function (require) {
             var obk = Object.keys(children);    
 
             obk.forEach( function(key) {
-                var child = {"name":"default","children":[],"size":1};
+                var child = {"name":"default","children":[],"size":1, "collapsed": false};
                 if(children[key].hasOwnProperty('key')){
                     child.name = children[key].key;
                     if(children[key].hasOwnProperty('doc_count')){
@@ -45,7 +46,7 @@ define(function (require) {
                     var sigb = Object.keys(children[key][3].buckets);
 
                     sigb.forEach( function(skey) {
-                        var child2 = {"name":"default","size":1};
+                        var child2 = {"name":"default","size":1, "collapsed": false};
                         child2.name = children[key][3].buckets[skey].key;
                         child2.size = children[key][3].buckets[skey].doc_count;                
                         if (newJson.maxSize < child2.size) newJson.maxSize = child2.size;

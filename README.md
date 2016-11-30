@@ -1,10 +1,17 @@
 # Kibana forced simulation aggregation visualisation plugin
 
-Kibana visualisation plugin using d3 forced simulation
+Kibana visualisation plugin using d3 forced simulation. Major purpose of this plugin was to provide tools for other plugin developments. 
+This plugin therefore has some interesting features like context menu, filters, dynamic d3 behaviour, 3D effects, node repositioning, etc. while the query handling is pretty basic.
+Functionality:
+- double clicking moves a node to the background or up
+- right click brings menu up - can collapse a node or display node information
+- dragging node positions it it static location, you can release the node by another drag
+- plugin options allow for display modifications (note - still working on behaviour, currently need to press play button next to options and query refresh button for changes to fire up)
 
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug1.jpg)
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug2.jpg)
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug3.jpg)
+![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug4.jpg)
 
 The plugin use the d3 latest library (v4) and thus will require installing it to Kibana. I have performed normal d3 installation in a separate folder and just moved it into d3v4 folder 
 (kibana-windows\node_modules\d3v4) and it worked fine. Will try to better understand node and require one day...

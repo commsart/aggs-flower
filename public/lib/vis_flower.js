@@ -7,7 +7,7 @@ define(function (require) {
         // if only one type can be instatiated, allow for only one vis handle to be stored and assigned
         var visFlower;
         var visOther;
-        var d3 = require('d3v4');
+        var d3 = require("d3v4");
         
         this.createVis = function(type, init) {
             
@@ -54,6 +54,7 @@ define(function (require) {
             };
             
             this.render = function () {
+                                
                 // calculate the svg size
                 w = parseInt(Math.sqrt(newJson.total) * locParams.fsize, 10);
                 if (w < 300) w = 300;
@@ -76,26 +77,28 @@ define(function (require) {
                     // cleanup up previous elements
                     svg.selectAll("rect").remove();
                     svg
-                        .attr('width', w)
-                        .attr('height', h)
-                        .attr('style',"display: block; margin: auto")
-                        .call(d3.zoom().scaleExtent([1 / 2, 8]).on("zoom", zoomed)) // activate zooming, currently does not work (even propagation!)
-                            .attr("transform", "translate(0,0)");
+                        .attr("width", w)
+                        .attr("height", h)
+                        .attr("style","display: block; margin: auto");
+                        //.call(d3.zoom().scaleExtent([1 / 2, 8]).on("zoom", zoomed)) // activate zooming, currently does not work (even propagation!)
+                          //  .attr("transform", "translate(0,0)");
                 // draw a border
                     svg.append("svg:rect")
                         .style("stroke", "#003")
                         .style("fill", "#eef")
                         .style("fill-opacity", "0.0")
-                        .attr('width', w)
-                        .attr('height', h);
+                        .attr("width", w)
+                        .attr("height", h)
+                        .on("click", rectClick);   // close node context meny, if any
                 }   else {
                     svg.selectAll("text").remove();
                     svg
-                        .attr('width', w)
-                        .attr('height', h);
+                        .attr("width", w)
+                        .attr("height", h);
                     svg.select("rect")
-                        .attr('width', w)
-                        .attr('height', h);                    
+                        .attr("width", w)
+                        .attr("height", h)
+                        .on("click", rectClick);   // close node context meny, if any
                 }
                 
                 // display sample data text
@@ -129,7 +132,7 @@ define(function (require) {
                   .style("stroke", "#aab");
                 // Update the nodes
                 svg.selectAll(".node").remove();
-				svg.selectAll(".nodesphere").remove();
+                svg.selectAll(".nodesphere").remove();
                 nodeSvg = svg.selectAll(".node").data(nodes);//, function(d) { return d.id; })
                 //nodeSvg.exit().remove();
                 // Enter any new nodes
@@ -138,27 +141,28 @@ define(function (require) {
                         .on("start", dragstarted)   // raise the node, restart simulation 
                         .on("drag", dragged)        // 
                         .on("end", dragended))      // 
-                    //.on("click", click)
                     .on("mouseover", mouseover) // show text
                     .on("mouseout", mouseout)   // hide text
-                    .on("dblclick", dblclick);  // lower node
+                    .on("dblclick", dblclick)   // lower node
+                    .on("contextmenu", contextmenu);    // right click menu
+
                 // draw nodes
                 nodeSvg.append("circle")
                     .attr("class", "node")
-        //          .classed("collapsed", function(d) { return d.data.collapsed ? true : false; }) // adds collapsed class if param exists, currently class not defined
+                    .classed("collapsed", function(d) { return d.data.collapsed ? true : false; }) // adds collapsed class, do not set collapsed in data!
                     .classed("filtered-shadow", function(d) { return d.data.size * sizeScale > 6 ? true : false;}) // classing and attr(class) sequence is important. shadow only above 6 size
-                    .attr("r", function(d) { return Math.max(locParams.minNodeSize, d.data.size * sizeScale);})
-                    .style("fill", function color(d) { return "hsl(" + (360/newJson.total)*d.data.id + ", " + locParams.hsld;}); // color is evenly distributed between all nodes by id
+                    .attr("r", function(d) { return d.data.collapsed ? 3 : Math.max(locParams.minNodeSize, d.data.size * sizeScale);})
+                    .style("fill", function color(d) { return d.data.color = "hsl(" + (360/newJson.total)*d.data.id + ", " + locParams.hsld;}); // color is computed and evenly distributed between all nodes by id
                 nodeSvg.append("circle")    // the sphere effect is added by a white smaller circle that is first offset here and then blurred in a filter
                     .attr("class", "nodesphere")
                     .classed("filtered-blur", true) // will be blured in filter by browser
-                    .attr("r", function(d) { return d.data.size * sizeScale * 0.45;})   // reduce diameter
+                    .attr("r", function(d) { return d.data.collapsed ? 0 : d.data.size * sizeScale * 0.45;})   // reduce diameter
                     .attr("cx", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
                     .attr("cy", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
                     .style("fill", "#fff"); // white color     
                 nodeSvg.append("circle")    // the sphere effect circle is added as white smaller circle
                     .attr("class", "nodesphere")
-                    .attr("r", function(d) { return d.data.size * sizeScale  > 15 ? d.data.size * sizeScale * d.data.size * sizeScale * 0.005 : 0;})   // reduce diameter
+                    .attr("r", function(d) { return d.data.collapsed ? 0 : (d.data.size * sizeScale  > 15 ? d.data.size * sizeScale * d.data.size * sizeScale * 0.005 : 0);})   // reduce diameter
                     .attr("cx", function(d) { return -d.data.size * sizeScale * 0.4;})  // offset centre
                     .attr("cy", function(d) { return -d.data.size * sizeScale * 0.3;})  // offset centre
                     .style("fill", "#fff"); // white color
@@ -168,7 +172,7 @@ define(function (require) {
                 nodeSvg.append("text")
                         .attr("dx", 12)
                         .attr("dy", 0)
-                        .style('display', 'none')
+                        .style("display", "none")
                         .text(function(d) { return d.data.name;});
                 
             };// end of render()
@@ -251,16 +255,98 @@ define(function (require) {
             // displays node text
             mouseover = function (d) {
                 if (locParams.alltext)  {
-                    svg.selectAll("text").style('display', 'block');
+                    svg.selectAll("text").style("display", "block");
                 }   else {
-                    d3.select(this).selectAll("text").style('display', 'block');
+                    d3.select(this).selectAll("text").style("display", "block");
                 }
             };
 
             // hide node text
             mouseout = function (d) {
-                d3.selectAll("text").style('display', 'none');
-                //d3.select(this).selectAll("text").style('display', 'none');
+                d3.selectAll("text").style("display", "none");
+                //d3.select(this).selectAll("text").style("display", "none");
+            };
+            
+            rectClick = function(d)    {
+                d3.selectAll(".context-menu").remove(); // close menu and other boxes
+                d3.selectAll(".node-info").remove(); // close menu and other boxes
+            };
+
+            contextmenu = function(d) {
+                var mOptions = ["Collapse Node", "Expand Node", "Node Information", "Hide Node - tbd"];
+
+                // grab the g element for later
+                var g = d3.select(this);
+                var node = g.select(".node"); // selects first node
+                var nodesphere = g.selectAll(".nodesphere");
+                nodes.length;
+
+                // create the div element that will hold the context menu
+                d3.selectAll(".context-menu").data([1])
+                    .enter()
+                    .append("div")
+                    .attr("class", "context-menu");
+                d3.selectAll(".node-info").data([1])
+                    .enter()
+                    .append("div")
+                    .attr("class", "node-info");
+                d3.select(".node-info").style("display", "none"); // close node info on the next click
+                // this gets executed when a contextmenu event occurs
+                d3.selectAll(".context-menu")
+                    .html("")
+                    .append("ul")
+                    .selectAll("li")
+                        .data(mOptions).enter()
+                        .append("li")
+                    .on("click" , function(dd) {
+                        var index = g._groups[0][0].__data__.index;
+                        // process returned line item text
+                        if (dd === mOptions[0])  {    // collapse                                
+                            d3.select(".context-menu").style("display", "none"); // close menu                            
+                            nodes[index].data.collapsed = true;
+                            node.classed("collapsed", true);
+                            nodesphere.classed("collapsed", true);
+                        } else if (dd === mOptions[1])  {    // Fix/Release
+                            d3.select(".context-menu").style("display", "none"); // close menu
+                            nodes[index].data.collapsed = false;
+                            node.classed("collapsed", false);
+                            nodesphere.classed("collapsed", false);                    
+                        } else if (dd === mOptions[2])  {    // info
+                            d3.select(".context-menu").style("display", "none"); // close menu
+                            var matrix = [
+                                [ "name", nodes[index].data.name,  "color", nodes[index].data.color],
+                                [ "size", nodes[index].data.size, "collapsed", nodes[index].data.collapsed]
+                              ];
+
+                            var tr = d3.selectAll(".node-info").data([1])
+                                .html("")
+                                .append("table")
+                                .selectAll("tr")
+                                .data(matrix)
+                                .enter().append("tr");
+
+                            var td = tr.selectAll("td")
+                                .data(function(d) { return d; })
+                                .enter().append("td")
+                                .text(function(d) { return d; });
+
+                            d3.select(".node-info")
+                                .style("left", (d3.event.pageX - 2) + "px")
+                                .style("top", (d3.event.pageY - 2) + "px")
+                                .style("display", "block");                
+                        } else if (dd === mOptions[3])  {    // Hide                                
+                            d3.select(".context-menu").style("display", "none"); // close menu
+                        }
+                        return dd; 
+                    })
+                .text(function(dd) { return dd; }); // return selected line item text
+
+                // show the context menu
+                d3.select(".context-menu")
+                  .style("left", (d3.event.pageX - 2) + "px")
+                  .style("top", (d3.event.pageY - 2) + "px")
+                  .style("display", "block");
+                d3.event.preventDefault(); // disable default right click
             };
 
             finished = function (d) {

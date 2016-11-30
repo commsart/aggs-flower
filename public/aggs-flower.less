@@ -44,17 +44,6 @@ circle {
         opacity: 1;
 }
 
-/*
-circle.parent {
-	fill: #1f77b4;
-	fill-opacity: .4;
-	stroke: steelblue;
-	opacity: 0.4;
-	stroke-width: 2;
-	stroke-dasharray: 5 3;
-}
-*/
-
 circle:hover {
   opacity: 1;
   stroke-width: 2px;
@@ -89,7 +78,12 @@ circle.node.directory {
 }
 
 circle.node.collapsed {
-  stroke: #555;
+  stroke: #f55;
+  r: 3;
+}
+
+circle.nodesphere.collapsed {
+  r: 0;
 }
 
 .nodetext {
@@ -102,4 +96,42 @@ line.link {
   fill: none;
   stroke: #9ecae1;
   stroke-width: 1.5px;
+}
+
+.context-menu,
+.node-info {
+  position: absolute;
+  display: none;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  min-width: 150px;
+  border: 1px solid #d4d4d4;
+  z-index:1200;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, td {
+    border: 1px solid gray;
+    padding: 2px;
+}
+
+.context-menu ul {
+  list-style-type: none;
+  margin: 4px 0px;
+  padding: 0px;
+  cursor: default;
+}
+
+.context-menu ul li {
+  padding: 4px 16px;
+}
+
+.context-menu ul li:hover {
+  background-color: #4677f8;
+  color: #fefefe;
 }

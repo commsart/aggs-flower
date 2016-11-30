@@ -14,7 +14,7 @@ define(function (require) {
         // create empty staging data. format:
         // name - displayed over the node, sizeScale - node size scaling for display, maxSize - largest data size,
         // size - data size, color - node color
-        // collapsed - collapsed node does not display its children and the size is the sum of the node and all node's children
+        // collapsed - collapsed node size is set to 3. TBD - hide children and rescale all the other nodes
         // total - total number of nodes, id - node id, log - use logarithmic scale to display node sizes
         var newJson = {"name":"","children":[],"size":0, "sizeScale": 1, "color":"hsl(0,90%,10%)","collapsed":false, "total":1, "maxSize":20.0, "id": 1, "log": false};        
         // can be used for initialising the controller, currently not in use
