@@ -8,13 +8,14 @@ Functionality:
 - dragging node positions it it static location, you can release the node by another drag
 - plugin options allow for display modifications (note - still working on behaviour, currently need to press play button next to options and query refresh button for changes to fire up)
 
+Youtube video link behind the screenshot:
 [![Youtube video](http://img.youtube.com/vi/st74y0_bdfc/0.jpg)](https://youtu.be/st74y0_bdfc)
 
+Static screenshots:
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug1.jpg)
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug2.jpg)
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug3.jpg)
 ![alt tag](https://github.com/commsart/aggs-flower/raw/master/pics/plug4.jpg)
-![alt tag](https://youtu.be/st74y0_bdfc/0.jpg)](https://youtu.be/st74y0_bdfc "aggs-flower")
 
 The plugin use the d3 latest library (v4) and thus will require installing it to Kibana. I have performed normal d3 installation in a separate folder and just moved it into d3v4 folder 
 (kibana-windows\node_modules\d3v4) and it worked fine. Will try to better understand node and require one day...
