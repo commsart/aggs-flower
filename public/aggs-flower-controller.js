@@ -30,14 +30,18 @@ define(function (require) {
             // wipe off previous data and regenerate new data tree
             newJson = {"name":"","children":[],"size":0, "sizeScale": 1, "color":"hsl(0,90%,10%)","collapsed":false, "total":1, "maxSize":20.0, "id": 1, "log": false};
             if ( resp !== undefined && !$scope.vis.params.vparams.sample) {
+                //   resp.hits.total !== 0
                 dch.convertAggsToJson(resp, newJson);   // real data
             }   else    { // else always use sample data
-//          }   else if (resp === undefined || $scope.vis.params.vparams.sample )    {
                 dch.convertAggsToJson(sampleData, newJson); // sample data
             }
             vs.updateDataAndParams(newJson, $scope.vis); // load visualisation with new data; separate from rending as at some stage only data will be updated
             vs.render();  // render
         }); // end of watch
+        
+        $scope.$watch('vis.params.vparams', function () {
+            // alert("change accepted");
+        });
                 
     }); // end of controller
 });
